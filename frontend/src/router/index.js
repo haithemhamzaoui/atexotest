@@ -7,6 +7,7 @@ const routes = [
     {path: '/config', name: 'Configuration', component: ConfigurationPage}
 ];
 
+
 /**
  *Vue Router instance.
  * @returns {Router} The router instance.
