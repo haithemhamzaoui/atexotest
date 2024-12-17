@@ -1,14 +1,14 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import GenerationPage from '@/views/GenerationPage.vue';
-import ConfigurationPage from '@/views/ConfigurationPage.vue';
 
 Vue.use(Router);
 
-export default new Router({
-    mode: 'history',
-    routes: [
-        { path: '/', name: 'GenerationPage', component: GenerationPage },
-        { path: '/config', name: 'ConfigurationPage', component: ConfigurationPage },
-    ],
+/**
+ *Vue Router instance.
+ * @returns {Router} The router instance.
+ */
+const router = createRouter({
+    history: createWebHistory(), routes,
 });
+
+export default router;
