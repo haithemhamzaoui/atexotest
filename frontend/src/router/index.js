@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import GenerationPage from '@/views/GenerationPage.vue';
 
-Vue.use(Router);
+const routes = [{path: '/', name: 'GenerationPage', component: GenerationPage}];
 
 /**
  *Vue Router instance.
