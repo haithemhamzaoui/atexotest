@@ -21,7 +21,6 @@ This project is a microservices-based application that allows users to configure
     - [Frontend](#frontend)
 - [Running the Application](#running-the-application)
     - [Using Docker Compose](#using-docker-compose)
-    - [Running Services Locally](#running-services-locally)
 - [API Endpoints](#api-endpoints)
 
 ---
