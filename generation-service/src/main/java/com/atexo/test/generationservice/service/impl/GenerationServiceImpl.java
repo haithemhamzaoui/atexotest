@@ -26,7 +26,7 @@ public class GenerationServiceImpl implements GenerationService {
     private static final Logger logger = LoggerFactory.getLogger(GenerationServiceImpl.class);
     @Autowired
     RestTemplate restTemplate;
-    private AtomicInteger counter;
+    private AtomicInteger compteur;
     @Autowired
     private GenerationRepository repository;
     @Value("${config.service.url}")
@@ -35,14 +35,14 @@ public class GenerationServiceImpl implements GenerationService {
     @Override
     public String generate(final Map<String, String> inputData) {
         logger.info("Starting generation with input data: {}", inputData);
-        AtomicInteger counterLength = new AtomicInteger();
+        AtomicInteger compteurLength = new AtomicInteger();
         List<Map<String, Object>> configurations = fetchConfigurations();
 
         StringBuilder generationInscrit = new StringBuilder();
 
         configurations.stream()
                 .sorted(Comparator.comparing(c -> ((Integer) c.get(CONFIGURATION_ORDER))))
-                .forEach(config -> this.processConfiguration(config, inputData, generationInscrit, counterLength));
+                .forEach(config -> this.processConfiguration(config, inputData, generationInscrit, compteurLength));
 
         this.saveGeneration(generationInscrit.toString());
 
@@ -65,15 +65,16 @@ public class GenerationServiceImpl implements GenerationService {
         logger.info("Fetching configurations from URL: {}", configServiceUrl);
         return restTemplate.getForObject(configServiceUrl, List.class);
     }
+
     /**
      * Processes a single configuration and appends the generated value to the generation string.
      *
-     * @param config the configuration map containing configuration details
-     * @param inputData the input data map containing user inputs
+     * @param config            the configuration map containing configuration details
+     * @param inputData         the input data map containing user inputs
      * @param generationInscrit the StringBuilder to append the generated value
-     * @param counterLength the AtomicInteger that store the length of the counter
+     * @param compteurLength    the AtomicInteger that store the length of the compteur
      */
-    private void processConfiguration(final Map<String, Object> config, final Map<String, String> inputData, final StringBuilder generationInscrit, final AtomicInteger counterLength) {
+    private void processConfiguration(final Map<String, Object> config, final Map<String, String> inputData, final StringBuilder generationInscrit, final AtomicInteger compteurLength) {
         String name = (String) config.get(CONFIGURATION_NAME);
         String prefix = (String) config.get(CONFIGURATION_PREFIX);
         String suffix = (String) config.get(CONFIGURATION_SUFFIX);
@@ -87,27 +88,31 @@ public class GenerationServiceImpl implements GenerationService {
             generationInscrit.append(prefix);
         }
         generationInscrit.append(value);
-        if (!Strings.isBlank(suffix)) {
+        if (!Strings.isBlank(suffix) && !name.equals(CONFIGURATION_COMPTEUR)) {
             generationInscrit.append(suffix);
         }
-        if (name.equals("compteur")) {
-            if (this.counter == null) {
-                this.counter = new AtomicInteger(initValue);
+        if (name.equals(CONFIGURATION_COMPTEUR)) {
+            if (this.compteur == null) {
+                this.compteur = new AtomicInteger(initValue);
             }
-            counterLength.set(length);
-            this.appendCounterValue(generationInscrit, counterLength);
+            compteurLength.set(length);
+            this.appendCompteurValue(generationInscrit, compteurLength);
+            //add suffix compteur after incrimenting the compteur
+            if (!Strings.isBlank(suffix)) {
+                generationInscrit.append(suffix);
+            }
         }
     }
 
     /**
-     * Appends the counter value if counter is not null, if counter length is greater than 0, it will be formatted.
+     * Appends the compteur value if compteur is not null, if compteur length is greater than 0, it will be formatted.
      *
      * @param generationInscrit the generation string builder
-     * @param counterLength     the counter length
+     * @param compteurLength    the compteur length
      */
-    public void appendCounterValue(final StringBuilder generationInscrit,final  AtomicInteger counterLength) {
-        if (counter != null) {
-            generationInscrit.append((counterLength.get() > 0) ? String.format("%0" + counterLength + "d", counter.incrementAndGet()) : counter.incrementAndGet());
+    public void appendCompteurValue(final StringBuilder generationInscrit, final AtomicInteger compteurLength) {
+        if (compteur != null) {
+            generationInscrit.append((compteurLength.get() > 0) ? String.format("%0" + compteurLength + "d", compteur.incrementAndGet()) : compteur.incrementAndGet());
         }
     }
 
@@ -122,8 +127,8 @@ public class GenerationServiceImpl implements GenerationService {
         repository.save(newGeneration);
     }
 
-    public void setCounter(final AtomicInteger counter) {
-        this.counter = counter;
+    public void setCompteur(final AtomicInteger compteur) {
+        this.compteur = compteur;
     }
 
     public void setConfigServiceUrl(final String configServiceUrl) {

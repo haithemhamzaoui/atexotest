@@ -7,4 +7,5 @@ public interface Constant {
     String CONFIGURATION_SUFFIX = "suffix";
     String CONFIGURATION_LENGTH = "length";
     String CONFIGURATION_INITVALUE = "initValue";
+    String CONFIGURATION_COMPTEUR = "compteur";
 }
