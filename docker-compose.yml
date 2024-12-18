@@ -1,0 +1,50 @@
+version: '3.0'
+
+services:
+  config-service:
+    image: config-service:latest
+    build:
+      context: ./config-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DATABASE_URL=jdbc:h2:mem:configdb
+    networks:
+      - app-network
+
+  generation-service:
+    image: generation-service:latest
+    build:
+      context: ./generation-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVICE_URL=http://config-service:8081
+    depends_on:
+      - config-service
+    networks:
+      - app-network
+
+  frontend:
+    image: frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VUE_APP_GENERATION_SERVICE_URL=http://generation-service:8082
+      - VUE_APP_CONFIG_SERVICE_URL=http://config-service:8081
+    depends_on:
+      - config-service
+      - generation-service
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
