@@ -14,7 +14,7 @@ public class Configuration {
     private String prefix;
     private String suffix;
     private Integer length;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Integer configOrder;
     private Integer initValue;
 

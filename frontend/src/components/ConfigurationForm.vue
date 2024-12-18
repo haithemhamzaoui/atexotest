@@ -112,6 +112,7 @@ export default {
             placeholder="Suffixe"
         />
         <input
+            :disabled="field.name ==='dateOfBirth'"
             v-model.number="field.length"
             class="input"
             min="0"
