@@ -42,22 +42,19 @@ public class ConfigurationServiceImpl implements ConfigurationService {
                 logger.error("Configuration name is required");
                 throw new IllegalArgumentException("Configuration name is required");
             }
-            Configuration existingConfigOrder = repository.findByConfigOrder(config.getConfigOrder());
             Configuration existingConfig = repository.findByName(config.getName());
             //verify that the configuration with the same order does not exist
-            if (existingConfigOrder == null) {
-                if (existingConfig != null) {
-                    logger.info("Updating existing configuration: {}", existingConfig);
-                    existingConfig.setPrefix(config.getPrefix());
-                    existingConfig.setSuffix(config.getSuffix());
-                    existingConfig.setLength(config.getLength());
-                    existingConfig.setConfigOrder(config.getConfigOrder());
-                    existingConfig.setInitValue(config.getInitValue());
-                    repository.save(existingConfig);
-                } else {
-                    logger.info("Saving new configuration: {}", config);
-                    repository.save(config);
-                }
+            if (existingConfig != null) {
+                logger.info("Updating existing configuration: {}", existingConfig);
+                existingConfig.setPrefix(config.getPrefix());
+                existingConfig.setSuffix(config.getSuffix());
+                existingConfig.setLength(config.getLength());
+                existingConfig.setConfigOrder(config.getConfigOrder());
+                existingConfig.setInitValue(config.getInitValue());
+                repository.save(existingConfig);
+            } else {
+                logger.info("Saving new configuration: {}", config);
+                repository.save(config);
             }
         }
         List<Configuration> allConfigs = this.getAllConfigs();

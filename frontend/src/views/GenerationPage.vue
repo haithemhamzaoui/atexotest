@@ -1,12 +1,10 @@
 <script>
 import GenerationForm from '@/components/GenerationForm.vue';
-import Toast from '@/components/Toast.vue';
 import apiService from "@/services/apiService";
 
 export default {
   components: {
     GenerationForm,
-    Toast,
   },
   data() {
     return {
@@ -23,13 +21,13 @@ export default {
       this.configurationsCount = response.data.length;
       // If no configurations are found, alert the user and redirect to the config page
       if (this.configurationsCount === 0) {
-        this.$refs.toast.show("Pas de configuration, veuillez en créer une avant de générer un ID unique.");
+        alert("Pas de configuration, veuillez en créer une avant de générer un ID unique.");
         this.$router.replace('/config');
       }
     } catch (error) {
       // Handle errors by setting configurations count to 0, alerting the user, and redirecting to the config page
       this.configurationsCount = 0;
-      this.$refs.toast.show("Pas de configuration, veuillez en créer une avant de générer un ID unique.");
+      alert("Pas de configuration, veuillez en créer une avant de générer un ID unique.");
       this.$router.replace('/config');
     }
   }
