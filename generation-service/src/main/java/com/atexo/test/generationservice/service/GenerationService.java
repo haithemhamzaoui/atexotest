@@ -1,6 +1,5 @@
 package com.atexo.test.generationservice.service;
 
-import com.atexo.test.generationservice.dto.GenerationInput;
 import com.atexo.test.generationservice.model.Generation;
 
 import java.util.List;
