@@ -21,7 +21,6 @@ export default {
 #configurationPage {
   text-align: left;
   color: #2c3e50;
-  margin-top: 60px;
-  width: 700px;
+  width: 800px;
 }
 </style>
