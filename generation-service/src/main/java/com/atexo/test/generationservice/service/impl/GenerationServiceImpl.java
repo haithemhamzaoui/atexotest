@@ -65,7 +65,14 @@ public class GenerationServiceImpl implements GenerationService {
         logger.info("Fetching configurations from URL: {}", configServiceUrl);
         return restTemplate.getForObject(configServiceUrl, List.class);
     }
-
+    /**
+     * Processes a single configuration and appends the generated value to the generation string.
+     *
+     * @param config the configuration map containing configuration details
+     * @param inputData the input data map containing user inputs
+     * @param generationInscrit the StringBuilder to append the generated value
+     * @param counterLength the AtomicInteger that store the length of the counter
+     */
     private void processConfiguration(final Map<String, Object> config, final Map<String, String> inputData, final StringBuilder generationInscrit, final AtomicInteger counterLength) {
         String name = (String) config.get(CONFIGURATION_NAME);
         String prefix = (String) config.get(CONFIGURATION_PREFIX);
@@ -90,7 +97,6 @@ public class GenerationServiceImpl implements GenerationService {
             counterLength.set(length);
             this.appendCounterValue(generationInscrit, counterLength);
         }
-
     }
 
     /**
