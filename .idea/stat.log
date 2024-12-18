@@ -757,3 +757,6 @@
 {"ts":1734466119413,"action":"IDE_DEACTIVATED"}
 {"ts":1734466121924,"action":"IDE_ACTIVATED"}
 {"ts":1734466124993,"action":"FILE_CLOSED","file":"/frontend/src/router/index.js","tags":{"FILE_LINE_OF_CODE":"19"}}
+{"ts":1734520336334,"action":"FILE_OPENED","file":"/frontend/src/App.vue","tags":{"FILE_LINE_OF_CODE":"39"}}
+{"ts":1734520336534,"action":"FILE_CLOSED","file":"/frontend/src/App.vue","tags":{"FILE_LINE_OF_CODE":"39"}}
+{"ts":1734520336534,"action":"FILE_OPENED","file":"/frontend/src/router/index.js","tags":{"FILE_LINE_OF_CODE":"19"}}

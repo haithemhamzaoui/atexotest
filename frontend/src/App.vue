@@ -23,16 +23,30 @@ export default {};
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 #view {
   text-align: left;
-  width: 700px;
+  width: 800px;
   margin: 0 auto;
 }
 
 #logo {
   width: 200px;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #034ba2;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #0a315b;
 }
 </style>
